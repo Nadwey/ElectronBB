@@ -1,0 +1,22 @@
+{
+  "name": "electronbb",
+  "version": "0.0.1-alpha.1",
+  "description": "Easy electron main-renderer communication",
+  "main": "index.js",
+  "scripts": {
+    "test": "electron test/test.js"
+  },
+  "keywords": [
+    "electron"
+  ],
+  "author": "Nadwey",
+  "license": "MIT",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "electron": "*"
+  },
+  "dependencies": {
+    "is-plain-object": "^5.0.0",
+    "isarray": "^2.0.5"
+  }
+}

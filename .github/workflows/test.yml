@@ -1,0 +1,34 @@
+name: "Test"
+
+on:
+    schedule:
+        - cron: 0 0 1 * *
+    push:
+    pull_request:
+
+jobs:
+    analyze:
+        name: Test
+
+        permissions:
+            actions: read
+            contents: read
+            security-events: write
+
+        strategy:
+            fail-fast: false
+            matrix:
+                electron: [15, 16, 17, 18, latest]
+                os: [ubuntu-latest]
+        runs-on: ${{ matrix.os }}
+
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+            - name: Run tests
+              uses: GabrielBB/xvfb-action@v1
+              with:
+                  run: |
+                      npm ci
+                      npm --save-dev i electron@${{ matrix.os }}
+                      npm run test
