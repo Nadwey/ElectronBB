@@ -15,12 +15,19 @@ module.exports = (webContents) => {
         testNestedObject: {
             a: "b"
         },
-        testArray: [0, 1, 2, 3, "abc"]
+        testArray: [0, 1, 2, 3, "abc"],
+
+        testAsyncFunction: async() => {
+            return "abcd";
+        }
     });
 
     mainBridge.Export("testUtils", {
         print: (str) => {
             console.log(str);
+        },
+        printError: (str) => {
+            console.error(str);
         },
         end: (success) => {
             process.exit(success ? 0 : 1);

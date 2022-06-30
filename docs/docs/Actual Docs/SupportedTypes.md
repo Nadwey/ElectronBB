@@ -12,7 +12,7 @@ Notes don't affect your exported objects, I wrote them only because types only l
 | --------- | -------------------------------------------------------- |
 | BigInt    | Serializes to string, then gets converted back to BigInt |
 | Boolean   | -                                                        |
-| Function  | Passed by generated ID                                   |
+| Function  | (async function are supported) Passed by generated ID    |
 | Number    | NaNs are also supported                                  |
 | String    | -                                                        |
 | Undefined | Passed as type                                           |

@@ -1,4 +1,3 @@
-const { ipcRenderer } = require("electron");
 const electronbb = require("../lib/renderer");
 let testUtils = null;
 let success = true;
@@ -12,10 +11,10 @@ let success = true;
  */
 function check(actual, expected, name) {
     if (actual === expected) {
-        testUtils.print(`${name} passed!`);
+        testUtils.print(`passed - ${name}`);
         return;
     }
-    testUtils.print(`${name} failed!`);
+    testUtils.printError(`FAILED - ${name}`);
     success = false;
 }
 
@@ -49,6 +48,9 @@ async function test() {
 
     // array
     check(testObject1.testArray.join(""), "0123abc", "Array export");
+
+    check(await testObject1.testAsyncFunction(), "abcd", "Async function export - test 1");
+    check("then" in testObject1.testAsyncFunction(), true, "Async function export - test 2");
 
     testUtils.print("Also, if you see this message in the console, it works");
     testUtils.end(success);
