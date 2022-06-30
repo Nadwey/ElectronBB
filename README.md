@@ -4,7 +4,9 @@ Easier way to communicate between main and renderer
 
 ## Installation
 
-`npm i electronbb`
+```bash
+npm i electronbb
+```
 
 ## Usage
 
