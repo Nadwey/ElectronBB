@@ -4,6 +4,15 @@ on:
     schedule:
         - cron: 0 0 1 * *
     push:
+        branches:
+            - main
+        paths:
+            - lib/**
+            - package.json
+            - package-lock.json
+            - test/**
+            - index.js
+            - .github/workflows/**
     pull_request:
 
 jobs:
