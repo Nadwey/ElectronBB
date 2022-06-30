@@ -9,6 +9,10 @@
   "keywords": [
     "electron"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Nadwey/ElectronBB"
+  },
   "author": "Nadwey",
   "license": "MIT",
   "devDependencies": {
