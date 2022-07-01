@@ -3,7 +3,7 @@ const path = require("path");
 const testMainBridge = require("./test-MainBridge");
 
 console.log(`Using node ${process.versions.node}`);
-console.log(`Using node ${process.versions.electron}`);
+console.log(`Using electron ${process.versions.electron}`);
 
 function createWindow() {
     const win = new BrowserWindow({
