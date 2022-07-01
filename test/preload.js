@@ -18,48 +18,50 @@ function check(actual, expected, name) {
     success = false;
 }
 
-async function test() {
-    const testObject1 = await electronbb.Get("testObject1");
-
+async function testObject1(testObject) {
     // bigint
-    check(testObject1.testBigInt, 42n, "BigInt export");
+    check(testObject.testBigInt, 42n, "BigInt export");
 
     // boolean
-    check(testObject1.testBooleanTrue, true, "Boolean export");
+    check(testObject.testBooleanTrue, true, "Boolean export");
 
     // number
-    check(testObject1.testNumber, 1234, "Number export");
+    check(testObject.testNumber, 1234, "Number export");
 
     // NaN
-    check(Number.isNaN(testObject1.testNaN), true, "NaN export");
+    check(Number.isNaN(testObject.testNaN), true, "NaN export");
 
     // string
-    check(testObject1.testString, "abcd", "NaN export");
+    check(testObject.testString, "abcd", "NaN export");
 
     // undefined
-    check("testUndefined" in testObject1, true, "Undefined exists");
-    check(testObject1.testUndefined, undefined, "Undefined export");
+    check("testUndefined" in testObject, true, "Undefined exists");
+    check(testObject.testUndefined, undefined, "Undefined export");
 
     // null
-    check(testObject1.testNull, null, "Null export");
+    check(testObject.testNull, null, "Null export");
 
     // nested object
-    check(testObject1.testNestedObject.a, "b", "Nested object export");
+    check(testObject.testNestedObject.a, "b", "Nested object export");
 
     // array
-    check(testObject1.testArray.join(""), "0123abc", "Array export");
+    check(testObject.testArray.join(""), "0123abc", "Array export");
 
-    check(await testObject1.testAsyncFunction(), "abcd", "Async function export - test 1");
-    check("then" in testObject1.testAsyncFunction(), true, "Async function export - test 2"); // checks if promise
-
-    testUtils.print("Also, if you see this message in the console, it works");
-    testUtils.end(success);
+    check(await testObject.testAsyncFunction(), "abcd", "Async function export - test 1");
+    check("then" in testObject.testAsyncFunction(), true, "Async function export - test 2"); // checks if promise
 }
 
 async function preTest() {
     testUtils = await electronbb.Get("testUtils");
     
-    test();
+    testUtils.print(`--- Get ---`);
+    await testObject1(await electronbb.Get("testObject1"));
+
+    testUtils.print(`--- GetSync ---`);
+    await testObject1(electronbb.GetSync("testObject1"));
+
+    testUtils.print("Also, if you see this message in the console, it works");
+    testUtils.end(success);
 }
 
 preTest();

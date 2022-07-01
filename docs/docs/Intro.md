@@ -26,7 +26,7 @@ function createWindow() {
 
     mainBridge.export("exported", {
         a: "b",
-        c: 0xD
+        c: 0xd,
     });
 }
 
@@ -54,6 +54,20 @@ const electronbb = require("electronbb/lib/renderer");
 
 async function getThings() {
     const exported = await electronbb.Get("exported"); // name same as in export
+
+    console.log(exported.a); // b
+}
+
+getThings();
+```
+
+You can also do it synchronously:
+
+```js showLineNumbers
+const electronbb = require("electronbb/lib/renderer");
+
+function getThings() {
+    const exported = electronbb.GetSync("exported"); // name same as in export
 
     console.log(exported.a); // b
 }
