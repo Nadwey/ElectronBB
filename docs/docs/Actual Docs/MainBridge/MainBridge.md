@@ -42,14 +42,11 @@ mainBridge.Export("testObject", {
 You can access the object later from renderer
 
 ```js showLineNumbers
-const electronbb = require("electronbb/lib/renderer");
+const RendererBridge = require("electronbb/lib/renderer");
+let rendererBridge = new RendererBridge();
 
-async function PrintString() {
-    const object = await electronbb.Get("testObject");
-    console.log(object.exportedString);
-}
-
-PrintString(); // abcd
+const object = rendererBridge.GetSync("testObject");
+console.log(object.exportedString); // abcd
 ```
 
 ## MainBridge.Delete(name)
@@ -87,13 +84,9 @@ mainBridge.Export("truth", {
 In renderer process:
 
 ```js showLineNumbers
-const electronbb = require("electronbb/lib/renderer");
+const RendererBridge = require("electronbb/lib/renderer");
+let rendererBridge = new RendererBridge();
 
-async function getThings() {
-    const truth = await electronbb.Get("truth"); // name same as in export
-
-    console.log(truth.rustSuperiorToCpp); // false
-}
-
-getThings();
+const truth = rendererBridge.GetSync("truth"); // name same as in export
+console.log(truth.rustSuperiorToCpp); // false
 ```
