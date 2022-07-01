@@ -11,6 +11,7 @@ JSDoc sucks ngl.
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const MainBridge = require("electronbb/lib/main");
+let mainBridge = new MainBridge();
 
 function createWindow() {
     const win = new BrowserWindow({
@@ -22,7 +23,6 @@ function createWindow() {
     });
 
     win.loadFile(path.join(__dirname, "index.html"));
-    let mainBridge = new MainBridge();
 
     mainBridge.export("exported", {
         a: "b",
@@ -50,10 +50,11 @@ app.on("window-all-closed", () => {
 ## Importing an object in renderer
 
 ```js showLineNumbers
-const electronbb = require("electronbb/lib/renderer");
+const RendererBridge = require("electronbb/lib/renderer");
+let rendererBridge = new RendererBridge();
 
 async function getThings() {
-    const exported = await electronbb.Get("exported"); // name same as in export
+    const exported = await rendererBridge.Get("exported"); // name same as in export
 
     console.log(exported.a); // b
 }
@@ -64,10 +65,11 @@ getThings();
 You can also do it synchronously:
 
 ```js showLineNumbers
-const electronbb = require("electronbb/lib/renderer");
+const RendererBridge = require("electronbb/lib/renderer");
+let rendererBridge = new RendererBridge();
 
 function getThings() {
-    const exported = electronbb.GetSync("exported"); // name same as in export
+    const exported = rendererBridge.GetSync("exported"); // name same as in export
 
     console.log(exported.a); // b
 }

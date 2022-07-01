@@ -3,7 +3,7 @@ title: "MainBridge"
 slug: ./
 ---
 
-MainBridge class allows you to export and import objects from renderer.
+MainBridge class allows you to export objects to renderer.
 
 :::warning
 

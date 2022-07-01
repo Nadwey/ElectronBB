@@ -3,11 +3,7 @@ title: "Renderer"
 slug: "./"
 ---
 
-To get objects from main, you need to use functions that are stored in `lib/renderer` so, for example:
-
-```js showLineNumbers
-const electronbb = require("electronbb/lib/renderer");
-```
+RendererBridge class allows you to import objects from main.
 
 ## Get
 

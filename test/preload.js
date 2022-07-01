@@ -1,4 +1,4 @@
-const electronbb = require("../lib/renderer");
+const RendererBridge = require("../lib/renderer");
 let testUtils = null;
 let success = true;
 
@@ -52,13 +52,15 @@ async function testObject1(testObject) {
 }
 
 async function preTest() {
-    testUtils = await electronbb.Get("testUtils");
+    let rendererBridge = new RendererBridge();
+
+    testUtils = rendererBridge.GetSync("testUtils");
     
     testUtils.print(`--- Get ---`);
-    await testObject1(await electronbb.Get("testObject1"));
+    await testObject1(await rendererBridge.Get("testObject1"));
 
     testUtils.print(`--- GetSync ---`);
-    await testObject1(electronbb.GetSync("testObject1"));
+    await testObject1(rendererBridge.GetSync("testObject1"));
 
     testUtils.print("Also, if you see this message in the console, it works");
     testUtils.end(success);
