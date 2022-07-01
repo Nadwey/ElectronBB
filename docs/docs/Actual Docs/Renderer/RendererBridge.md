@@ -1,5 +1,5 @@
 ---
-title: "Renderer"
+title: "RendererBridge"
 slug: "./"
 ---
 
