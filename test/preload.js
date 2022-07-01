@@ -50,7 +50,7 @@ async function test() {
     check(testObject1.testArray.join(""), "0123abc", "Array export");
 
     check(await testObject1.testAsyncFunction(), "abcd", "Async function export - test 1");
-    check("then" in testObject1.testAsyncFunction(), true, "Async function export - test 2");
+    check("then" in testObject1.testAsyncFunction(), true, "Async function export - test 2"); // checks if promise
 
     testUtils.print("Also, if you see this message in the console, it works");
     testUtils.end(success);
