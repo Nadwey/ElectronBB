@@ -52,7 +52,7 @@ async function PrintString() {
 PrintString(); // abcd
 ```
 
-## MainBridge.delete(name)
+## MainBridge.Delete(name)
 
 Deletes speficied exported object **only from main process**.
 
