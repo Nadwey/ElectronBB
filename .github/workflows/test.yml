@@ -16,7 +16,7 @@ on:
     pull_request:
 
 jobs:
-    analyze:
+    test:
         name: Test
 
         permissions:

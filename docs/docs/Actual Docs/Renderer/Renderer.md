@@ -5,7 +5,11 @@ slug: "./"
 
 RendererBridge class allows you to import objects from main.
 
-## Get
+## RendererBridge.constructor()
+
+Creates new RendererBridge instance.
+
+## RendererBridge.Get(name)
 
 Gets an exported object from main.
 
@@ -23,7 +27,7 @@ Your object.
 
 See [Intro#Importing an object in renderer](../../Intro#importing-an-object-in-renderer)
 
-## GetSync
+## RendererBridge.GetSync(name)
 
 Same as Get, but it's sync.
 
