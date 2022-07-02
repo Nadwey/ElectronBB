@@ -9,7 +9,7 @@ RendererBridge class allows you to import objects from main.
 
 Creates new RendererBridge instance.
 
-## RendererBridge.Get(name)
+## async RendererBridge.Get(name)
 
 Gets an exported object from main.
 
@@ -25,7 +25,7 @@ Your object.
 
 ### Example
 
-See [Intro#Importing an object in renderer](../../Intro#importing-an-object-in-renderer)
+See [Intro#importing an object from main in renderer](../../Intro#importing-an-object-from-main-in-renderer)
 
 ## RendererBridge.GetSync(name)
 
@@ -43,4 +43,27 @@ Your object.
 
 ### Example
 
-See [Intro#Importing an object in renderer](../../Intro#importing-an-object-in-renderer)
+See [Intro#importing an object from main in renderer](../../Intro#importing-an-object-from-main-in-renderer)
+
+## RendererBridge.Export(name, object)
+
+Exports specified object to main.
+
+### Arguments
+
+| Name   | Type                                     | Description                  |
+| ------ | ---------------------------------------- | ---------------------------- |
+| name   | string                                   | Name of the object to export |
+| object | See [Supported Types](../SupportedTypes) | Object to export             |
+
+### Remarks
+
+:::caution
+
+All functions exported will be converted to async functions due to Electron's limitations.
+
+:::
+
+### Example
+
+See [Intro#Exporting an object from renderer to main](../../Intro#exporting-an-object-from-renderer-to-main)

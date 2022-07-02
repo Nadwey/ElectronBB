@@ -17,6 +17,8 @@ Creates MainBridge instance.
 
 ## MainBridge.Export(name, object)
 
+Exports specified object to renderer.
+
 ### Arguments
 
 | Name   | Type                                     | Description                 |
@@ -27,7 +29,7 @@ Creates MainBridge instance.
 ### Example
 
 ```js showLineNumbers
-const MainBridge = require("electronbb/lib/main");
+const { MainBridge } = require("electronbb");
 let mainBridge = new MainBridge();
 
 mainBridge.Export("testObject", {
@@ -42,7 +44,7 @@ mainBridge.Export("testObject", {
 You can access the object later from renderer
 
 ```js showLineNumbers
-const RendererBridge = require("electronbb/lib/renderer");
+const { RendererBridge } = require("electronbb");
 let rendererBridge = new RendererBridge();
 
 const object = rendererBridge.GetSync("testObject");
@@ -64,7 +66,7 @@ Deletes speficied exported object **only from main process**.
 In main process:
 
 ```js showLineNumbers
-const MainBridge = require("electronbb/lib/main");
+const { MainBridge } = require("electronbb");
 let mainBridge = new MainBridge();
 
 // let's export an object
@@ -84,9 +86,36 @@ mainBridge.Export("truth", {
 In renderer process:
 
 ```js showLineNumbers
-const RendererBridge = require("electronbb/lib/renderer");
+const { RendererBridge } = require("electronbb");
 let rendererBridge = new RendererBridge();
 
 const truth = rendererBridge.GetSync("truth"); // name same as in export
 console.log(truth.rustSuperiorToCpp); // false
 ```
+
+## async MainBridge.Get(window, name)
+
+Gets object exported from renderer.
+
+### Arguments
+
+| Name   | Type                                                                       | Description               |
+| ------ | -------------------------------------------------------------------------- | ------------------------- |
+| window | [BrowserWindow](https://www.electronjs.org/docs/latest/api/browser-window) | Window to get object from |
+| name   | string                                                                     | Name of the object to get |
+
+### Returns
+
+Your object.
+
+### Remarks
+
+:::caution
+
+All functions exported will be converted to async functions due to Electron's limitations.
+
+:::
+
+### Example
+
+See [Intro#importing-an-object-from-renderer-in-main](../../Intro#importing-an-object-from-renderer-in-main)

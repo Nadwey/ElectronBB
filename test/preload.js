@@ -1,6 +1,7 @@
-const RendererBridge = require("../lib/renderer");
+const { RendererBridge } = require("../index");
 let testUtils = null;
 let success = true;
+let rendererBridge = new RendererBridge();
 
 /**
  * Mini testing library shall we say
@@ -47,23 +48,65 @@ async function testObject1(testObject) {
     // array
     check(testObject.testArray.join(""), "0123abc", "Array export");
 
+    // async function
     check(await testObject.testAsyncFunction(), "abcd", "Async function export - test 1");
     check("then" in testObject.testAsyncFunction(), true, "Async function export - test 2"); // checks if promise
+
+    // date
+    check(testObject.testDate instanceof Date, true, "Date export");
+
+    // arraybuffer
+    check(testObject.testArrayBuffer instanceof ArrayBuffer, true, "ArrayBuffer export");
+
+    // map
+    check(testObject.testMap instanceof Map, true, "Map export");
+
+    // set
+    check(testObject.testSet instanceof Set, true, "Set export");
+
+    // error
+    check(testObject.testError instanceof Error, true, "Error export");
 }
 
 async function preTest() {
-    let rendererBridge = new RendererBridge();
-
     testUtils = rendererBridge.GetSync("testUtils");
-    
-    testUtils.print(`--- Get ---`);
+
+    testUtils.print(`--- Exported from main - Get ---`);
     await testObject1(await rendererBridge.Get("testObject1"));
 
-    testUtils.print(`--- GetSync ---`);
+    testUtils.print(`--- Exported from main - GetSync ---`);
     await testObject1(rendererBridge.GetSync("testObject1"));
 
     testUtils.print("Also, if you see this message in the console, it works");
-    testUtils.end(success);
 }
 
-preTest();
+rendererBridge.Export("test", {
+    testBigInt: 42n,
+    testBooleanTrue: true,
+    testBooleanFalse: false,
+    testNumber: 1234,
+    testNaN: NaN,
+    testString: "abcd",
+    testUndefined: undefined,
+    testNull: null,
+
+    testNestedObject: {
+        a: "b",
+    },
+    testArray: [0, 1, 2, 3, "abc"],
+
+    test: async () => {
+        await preTest();
+        return success;
+    },
+
+    testSyncFunction: async () => {
+        return "abcd";
+    },
+
+    testDate: new Date(),
+    testArrayBuffer: new ArrayBuffer(10),
+    testMap: new Map(),
+    testSet: new Set(),
+    testError: new Error(),
+});

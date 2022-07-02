@@ -5,12 +5,12 @@ title: "Intro"
 
 JSDoc sucks ngl.
 
-## Exporting an object from main
+## Exporting an object from main to renderer
 
 ```js showLineNumbers
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow } = require("electron");
 const path = require("path");
-const MainBridge = require("electronbb/lib/main");
+const { MainBridge } = require("electronbb");
 let mainBridge = new MainBridge();
 
 function createWindow() {
@@ -22,35 +22,23 @@ function createWindow() {
         },
     });
 
-    win.loadFile(path.join(__dirname, "index.html"));
-
     mainBridge.export("exported", {
         a: "b",
         c: 0xd,
     });
+
+    win.loadFile(path.join(__dirname, "index.html"));
 }
 
 app.whenReady().then(() => {
     createWindow();
-
-    app.on("activate", () => {
-        if (BrowserWindow.getAllWindows().length === 0) {
-            createWindow();
-        }
-    });
-});
-
-app.on("window-all-closed", () => {
-    if (process.platform !== "darwin") {
-        app.quit();
-    }
 });
 ```
 
-## Importing an object in renderer
+## Importing an object from main in renderer
 
 ```js showLineNumbers
-const RendererBridge = require("electronbb/lib/renderer");
+const { RendererBridge } = require("electronbb");
 let rendererBridge = new RendererBridge();
 
 async function getThings() {
@@ -65,7 +53,7 @@ getThings();
 You can also do it synchronously:
 
 ```js showLineNumbers
-const RendererBridge = require("electronbb/lib/renderer");
+const { RendererBridge } = require("electronbb");
 let rendererBridge = new RendererBridge();
 
 function getThings() {
@@ -75,4 +63,44 @@ function getThings() {
 }
 
 getThings();
+```
+
+## Exporting an object from renderer to main
+
+```js
+const { RendererBridge } = require("electronbb");
+let rendererBridge = new RendererBridge();
+
+rendererBridge.Export("yourObject", {
+    message: "Hello Main",
+});
+```
+
+## Importing an object from renderer in main
+
+```js
+const { app, BrowserWindow } = require("electron");
+const path = require("path");
+const { MainBridge } = require("electronbb");
+
+async function createWindow() {
+    const win = new BrowserWindow({
+        width: 800,
+        height: 600,
+        webPreferences: {
+            preload: path.join(__dirname, "preload.js"),
+            sandbox: false,
+        },
+    });
+
+    const mainBridge = new MainBridge();
+    await win.loadFile(path.join(__dirname, "index.html"));
+    const object = await mainBridge.Get("yourObject");
+
+    console.log(object.message); // Hello Main
+}
+
+app.whenReady().then(() => {
+    createWindow();
+});
 ```

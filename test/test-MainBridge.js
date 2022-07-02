@@ -1,8 +1,4 @@
-const MainBridge = require("../lib/main");
-
-module.exports = (webContents) => {
-    const mainBridge = new MainBridge(webContents);
-
+module.exports = (mainBridge) => {
     mainBridge.Export("testObject1", {
         testBigInt: 42n,
         testBooleanTrue: true,
@@ -13,13 +9,19 @@ module.exports = (webContents) => {
         testNull: null,
 
         testNestedObject: {
-            a: "b"
+            a: "b",
         },
         testArray: [0, 1, 2, 3, "abc"],
 
-        testAsyncFunction: async() => {
+        testAsyncFunction: async () => {
             return "abcd";
-        }
+        },
+
+        testDate: new Date(),
+        testArrayBuffer: new ArrayBuffer(10),
+        testMap: new Map(),
+        testSet: new Set(),
+        testError: new Error(),
     });
 
     mainBridge.Export("testUtils", {
@@ -29,8 +31,5 @@ module.exports = (webContents) => {
         printError: (str) => {
             console.error(str);
         },
-        end: (success) => {
-            process.exit(success ? 0 : 1);
-        }
     });
 };
