@@ -70,5 +70,5 @@ module.exports = async (window, mainBridge) => {
     const successRenderer = await testObject.test();
     if (typeof successRenderer !== "boolean" || !successRenderer) success = false;
 
-    process.exit(success ? 0 : 1);
+    return success;
 };

@@ -119,3 +119,24 @@ All functions exported will be converted to async functions due to Electron's li
 ### Example
 
 See [Intro#importing-an-object-from-renderer-in-main](../../Intro#importing-an-object-from-renderer-in-main)
+
+## static MainBridge.GetInstance()
+
+### Returns
+
+Instance of MainBridge.  
+If none initialized, returns `null`;
+
+### Remarks
+
+This will only return the latest initialized instance of MainBridge.
+
+### Example
+
+```js
+const { MainBridge } = require("electronbb");
+let mainBridge = new MainBridge();
+
+console.log(mainBridge === MainBridge.GetInstance()); // true
+```
+
