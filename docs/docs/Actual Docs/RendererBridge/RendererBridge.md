@@ -23,6 +23,10 @@ Gets an exported object from main.
 
 Your object.
 
+### Remarks
+
+Sync functions will have `callIgnore` property which will call them without freezing renderer process and ignore return value.
+
 ### Example
 
 See [Intro#importing an object from main in renderer](../../Intro#importing-an-object-from-main-in-renderer)
@@ -40,6 +44,10 @@ Same as Get, but it's sync.
 ### Returns
 
 Your object.
+
+### Remarks
+
+Sync functions will have `callIgnore` property which will call them without freezing renderer process and ignore return value.
 
 ### Example
 
