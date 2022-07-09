@@ -112,7 +112,7 @@ Your object.
 
 :::caution
 
-All functions exported will be converted to async functions due to Electron's limitations.
+Functions imported from renderer are converted to async functions due to Electron's limitations.
 
 :::
 
